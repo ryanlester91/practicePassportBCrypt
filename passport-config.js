@@ -1,27 +1,31 @@
 //****separate page for passport-config.js***
 const LocalStrategy = require('passport-local').Strategy
-//const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 
-function initialize(passport) {
-	const authenticateUser = (email, password, done) => {
-}
-	passport.use(new LocalStrategy({usernameField: ''}), authenticateUser)
+function initialize(passport, getUserByEmail, getUserById) {
+	const authenticateUser = async (email, password, done) => {
 
-	const user = getUserByEID(employeeID)
+	
+
+	const user = getUserByEmail(email)
 	if (user == null) {
-	return done(null, false, {message:"Needs a EID to continue"}) } }
-
+	return done(null, false, {message:"Needs an E-Mail to continue"})
+	}
 	try {
 	if (await bcrypt.compare(password, user.password)) {
-	return done(null, user
+	return done(null, user)
 	} else {
 	return done(null, false, {message: "password doesn't match"})
-	catch (err) {
+	}
+	} catch (err) {
 	return done (err)
 	}
 }
-	passport.serializeUser((user, done) => { })
-	passport.deserializeUser((user, done)
+passport.use(new LocalStrategy({usernameField: 'email'}, authenticateUser))
+	passport.serializeUser((user, done) => done(null, user.id))
+	passport.deserializeUser((id, done) => {
+		return done(null, getUserById(id))
+	})
+}
 
-
-initialize();
+module.exports = initialize

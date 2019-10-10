@@ -9,7 +9,10 @@
   </head>
   
   <body>
-  
+    <!--Something's screwy with the "ejs %-tags" functioning-->
+    <!--<% if (messages.error) { %>
+      <%= messages.error %>
+      <% } %>-->
     <div class="container">
   
       <br>
@@ -30,15 +33,12 @@
             <div class="card-body">
   
               <!-- Sign-up Form (note the various input "types")-->
-              <form role="form">
+              <form action="/login" method="POST">
                 <div class="form-group row">
-                  <label for="name-input">Employee ID:</label>
-                  <input class="form-control" id="name-input" type="text">
+                  <label for="email-input">Email:</label>
+                  <input class="form-control" id="email-input" type="text">
                 </div>
-                <div class="form-group row">
-                  <label for="age-input">Truck Number:</label>
-                  <input class="form-control" id="age-input" type="number">
-                </div>
+              
                 <div class="form-group row">
                   <label for="password-input">Password:</label>
                   <input class="form-control" id="password" type="password">
